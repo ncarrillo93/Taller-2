@@ -16,12 +16,16 @@
       <h1>Lista de Peliculas</h1>
 
       <div class="d-flex justify-content-around flex-wrap" style="span: 3px">
-        <b-card class="btn" img-top style="max-width: 182px;" v-for="peli in peliculas" :key="peli.title" :peliculas="peli" v-b-modal.modal-center >
+        <b-card 
+          img-top
+          style="max-width: 182px;"
+          class="btn" v-for="peli in peliculas" :key="peli.title" :peliculas="peli" v-b-modal.modal-center >
           <img class="card-img-top" style="max-height: 180 px; max-width: 180px" :src="peli.poster_path" :alt="peli.original_title"/>
           <div>
             {{ peli.original_title }}
           </div>
           <div>
+            
             <span class="material-icons">star</span>
             {{ peli.vote_average }}
           </div>
@@ -65,7 +69,7 @@ export default {
       this.page = this.page.concat(page);
       this.loading = true;
       for (let i = 0; i < this.page.length; i++) {
-        const { data } = await ApiService.getTopRated(this.page[i]);
+        const { data } = await ApiService.getPopular(this.page[i]);
         this.aux = data.results;
         for (let j = 0; j < this.aux.length; j++)
           this.aux[j] = await this.getPelicula(this.aux[j].id);
