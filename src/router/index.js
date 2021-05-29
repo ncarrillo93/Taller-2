@@ -20,6 +20,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "TopRated" */ '../views/TopRated.vue')
   },
   {
+    path: '/Movie/:id',
+    name: 'Movie',
+    component: () => import(/* webpackChunkName: "Movie" */ '../views/Movie.vue')
+  },
+  {
     path: '*',
     redirect: '/PopularMovie'
   },

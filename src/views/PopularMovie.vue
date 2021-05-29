@@ -49,39 +49,38 @@
 </template>
 
 <script>
-//import MovieCard from "@/models/MovieCard";
-import ApiService from "@/services/api.service";
-import Movie from "@/models/Movie";
-export default {
-  data() {
-    return {
-      page: [],
-      loading: true,
-      aux: [],
-      peliculas: [],
-    };
-  },
-  mounted() {
-    this.getPeliculas(1);
-  },
-  methods: {
-    async getPeliculas(page) {
-      this.page = this.page.concat(page);
-      this.loading = true;
-      for (let i = 0; i < this.page.length; i++) {
-        const { data } = await ApiService.getPopular(this.page[i]);
-        this.aux = data.results;
-        for (let j = 0; j < this.aux.length; j++)
-          this.aux[j] = await this.getPelicula(this.aux[j].id);
-      }
-      this.peliculas = this.peliculas.concat(this.aux);
-      this.loading = false;
+  import ApiService from "@/services/api.service";
+  import Movie from "@/models/Movie";
+  export default {
+    data() {
+      return {
+        page: [],
+        loading: true,
+        aux: [],
+        peliculas: [],
+      };
     },
+    mounted() {
+      this.getPeliculas(1);
+    },
+    methods: {
+      async getPeliculas(page) {
+        this.page = this.page.concat(page);
+        this.loading = true;
+        for (let i = 0; i < this.page.length; i++) {
+          const { data } = await ApiService.getPopular(this.page[i]);
+          this.aux = data.results;
+          for (let j = 0; j < this.aux.length; j++)
+            this.aux[j] = await this.getPelicula(this.aux[j].id);
+        }
+        this.peliculas = this.peliculas.concat(this.aux);
+        this.loading = false;
+      },
 
-    async getPelicula(id) {
-      const { data } = await ApiService.getMovie(id);
-      return new Movie(data);
+      async getPelicula(id) {
+        const { data } = await ApiService.getMovie(id);
+        return new Movie(data);
+      },
     },
-  },
-};
+  };
 </script>
