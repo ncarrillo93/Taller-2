@@ -16,20 +16,20 @@
       <h1>Lista de Peliculas</h1>
 
       <div class="d-flex justify-content-around flex-wrap" style="span: 3px">
-        <b-card 
-          img-top
-          style="max-width: 182px;"
-          class="btn" v-for="peli in peliculas" :key="peli.title" :peliculas="peli" v-b-modal.modal-center >
+        <router-link v-for="peli in peliculas"
+                     :key="peli.id"
+                     :to="`Movie/${peli.id}`">  
+
           <img class="card-img-top" style="max-height: 180 px; max-width: 180px" :src="peli.poster_path" :alt="peli.original_title"/>
           <div>
             {{ peli.original_title }}
           </div>
           <div>
-            
             <span class="material-icons">star</span>
             {{ peli.vote_average }}
           </div>
-        </b-card>   
+        
+        </router-link>  
       </div>
 
       

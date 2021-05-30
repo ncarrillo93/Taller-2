@@ -1,42 +1,57 @@
 <template>
-    <div>
-        <b-card
-            overlay
-            img-src="https://picsum.photos/900/250/?image=3"
-            img-alt="Card Image"
-            text-variant="white"
-            title="Image Overlay"
-            sub-title="Subtitle"
-        >
-            <b-row>
-                <b-col cols="12" md="8" align-self="end">{{pelicula.title}}({{pelicula.original_title}})</b-col>
-                <b-col align-self="end"></b-col>
-            </b-row>
-            <b-card-text>
-                <span class="material-icons">star</span>
-                {{ pelicula.vote_average }}
-            </b-card-text>
-        </b-card>
-</div>
+    <div  class="d-flex container flex-wrap align-items-start bd-highlight">
+        <div class="w-100"><h1>{{ pelicula.title }}</h1></div>
+        <div class="w-100"><h3>({{ pelicula.original_title }})</h3></div>
+
+    <div class="poster w-40"> <img :src="pelicula.backdrop_path" /></div>    
+    <div class="d-flex flex-column bd-highlight mb-" >
+        
+        <div class="w-100">
+                <b-icon icon="star-fill" animation="fade" font-scale="1"></b-icon>
+                <div>{{ pelicula.vote_average }}</div>
+        </div>
+
+        
+        
+    <div class="card text-start" > {{ pelicula.overview }}</div>
+    </div>
+    
+
+  </div>
 </template>
 
 <script>
-    import ApiService from "@/services/api.service";
-    import Movie from "@/models/Movie";
-    export default {
-        data() {
-            return {
-            pelicula:{},
-            };
-        },
-        mounted() {
-            this.getPelicula();
-        },
-        methods: {
-            async getPelicula() {
-                const { data } = await ApiService.getMovie(this.$route.params.id);
-                this.pelicula = new Movie(data);
-            },
-        },
+import ApiService from "@/services/api.service";
+import Movie from "@/models/Movie";
+export default {
+  data() {
+    return {
+      pelicula: {},
     };
+  },
+  mounted() {
+    this.getPelicula();
+  },
+  methods: {
+    async getPelicula() {
+      const { data } = await ApiService.getMovie(this.$route.params.id);
+
+      this.pelicula = new Movie(data);
+      console.log(this.pelicula.genres);
+    },
+  },
+};
 </script>
+<style >
+.carta {
+  background-color: crimson;
+
+}
+.poster {
+    margin: auto;
+    max-height: auto;
+    max-width: auto;
+    border-radius: 15px;
+    box-shadow: 2px;
+}
+</style>
